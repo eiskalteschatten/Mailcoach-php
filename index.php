@@ -19,15 +19,38 @@
 				$server = "";
 				$user = "";
 				$passwd = "";
- echo "hi";
-				$mbox = imap_open($server,$user,$passwd) or die("Could not open Mailbox - try again later!");
-				$message_count = imap_num_msg($mbox);
- echo "hi2";
-				for ($i = 1; $i <= $message_count; ++$i) {
-					echo imap_header($mbox, $i) . " (" . date("Y-m-d H:i:s", strtotime($header->MailDate)) . ")<br />";
-				}
+				
+				include("mail.config");
+				
+				$inbox = imap_open($server,$user,$passwd) or die("Could not open Mailbox - try again later!");
+				$message_count = imap_num_msg($inbox);
+				
+				echo "Emails: ".$message_count;
+				
+				$emails = imap_search($inbox,'ALL');
+				
+				if($emails) {
+					$output = '';
+					
+					rsort($emails);
+					
+					foreach($emails as $email_number) {
+						/* get information specific to this email */
+						$overview = imap_fetch_overview($inbox,$email_number,0);
+						$message = imap_fetchbody($inbox,$email_number,2);
+						
+						/* output the email header information */
+						$output.= '<div class="toggler '.($overview[0]->seen ? 'read' : 'unread').'">';
+						$output.= '<span class="subject">'.$overview[0]->subject.'</span> ';
+						$output.= '<span class="from">'.$overview[0]->from.'</span>';
+						$output.= '<span class="date">on '.$overview[0]->date.'</span>';
+						$output.= '</div>';
+					}
+					
+					echo $output;
+				} 
+				
 				imap_close($mbox);
-				 echo "hi3";
 			}
 			catch (Exception $e) {
 				throw new Exception('Something went wrong', 0, $e);
