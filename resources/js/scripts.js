@@ -10,21 +10,21 @@ function fetchMail() {
 	}).done(function(data) {
 		console.log(data);
 		var emails = $.parseJSON(data);
-		
+
 		$('#emailcount').html(emails.count);
-		
+
 		var html = "";
-		
+
 		for (var key in emails) {
 			if (key != "count") {
-				html += '<div class="emailrow">';
+				html += '<div class="item">';
 				html += emails[key];
 				html += '</div>';
-			}		
+			}
 		}
-		
+
 		$('.emails').html(html);
-		
+
 		$('.emailrow').click(function () {
 			getMailContents($(this));
 		});
@@ -35,7 +35,7 @@ function fetchMail() {
 
 function getMailContents(obj) {
 	var emailNumber = obj.find('.emailnumber').text();
-	
+
 	$.ajax({
 		url: "app/fetchMail.php",
 		type: 'POST',
@@ -43,17 +43,17 @@ function getMailContents(obj) {
 	}).done(function(data) {
 		console.log(data);
 		/*var emails = $.parseJSON(data);
-		
+
 		$('#emailcount').html(emails.count);
-		
+
 		var html = "";
-		
+
 		for (var key in emails) {
 			if (key != "count") {
 				html += emails[key];
-			}		
+			}
 		}*/
-		
+
 		$('.emails').html(data);
 	}).fail(function() {
 		alert("There was an ajax error when getting contents.");

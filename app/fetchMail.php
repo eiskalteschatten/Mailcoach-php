@@ -35,11 +35,11 @@
 						$message = imap_fetchbody($this->mailbox,$email_number,2);
 
 						$output = '';
-						$output.= '<div class="toggler '.($overview[0]->seen ? 'read' : 'unread').'">';
-						$output.= '<span class="subject">'.$overview[0]->subject.'</span> ';
-						$output.= '<span class="from">'.$overview[0]->from.'</span>';
-						$output.= '<span class="date">on '.$overview[0]->date.'</span>';
-						$output.= '<span class="emailnumber">'.$email_number.'</span>';
+						$output.= '<div class="'.($overview[0]->seen ? 'read' : 'unread').'">';
+						$output.= '<div class="from">'.$overview[0]->from.'</div>';
+						$output.= '<div class="subject">'.$overview[0]->subject.'</div> ';
+						$output.= '<div class="date">on '.$overview[0]->date.'</div>';
+						$output.= '<div class="emailnumber">'.$email_number.'</div>';
 						$output.= '</div>';
 
 						$emailinfo[] = $output;
