@@ -19,6 +19,6 @@
 		</div>
 		<div class="count">
 			Emails: <span id="emailcount"></span>
-		</div>		
+		</div>
 	</body>
 </html>
